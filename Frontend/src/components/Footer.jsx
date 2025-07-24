@@ -37,11 +37,11 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-emerald-400" />
-                <span className="text-gray-300">123 Sports Street, City Center</span>
+                <span className="text-gray-300">Thadomal Shahani Engineering College, Bandra</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-emerald-400" />
-                <span className="text-gray-300">+91 98765 43210</span>
+                <span className="text-gray-300">+91 80800 55453</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-emerald-400" />
@@ -53,7 +53,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 TurfEase. All rights reserved. Made with ❤️ for sports lovers.
+            © 2025 TurfEase. All rights reserved. Made with ❤️ by VisionX.
           </p>
         </div>
       </div>

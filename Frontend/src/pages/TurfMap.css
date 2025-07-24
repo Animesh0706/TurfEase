@@ -1,0 +1,13 @@
+.custom-popup {
+  width: 220px;
+  font-family: sans-serif;
+}
+.custom-popup img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+.custom-popup h4 {
+  margin: 0;
+  font-size: 14px;
+}

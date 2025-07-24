@@ -151,9 +151,10 @@ const AboutPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Rajesh Kumar', role: 'Founder & CEO', image: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg' },
-              { name: 'Priya Singh', role: 'CTO', image: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg' },
-              { name: 'Amit Sharma', role: 'Head of Operations', image: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg' }
+              { name: 'Animesh Singh', role: 'Founder & CEO', image: "ani.jpeg" },
+              { name: 'Priyanshi Singh', role: 'CTO', image: "priyanshi.jpeg" },
+              { name: 'Asmit Pandey', role: 'Head of Operations', image: "asmit.jpeg" },
+              { name: 'Pratham Tapadia', role: 'Marketing', image: "pratham_tapadia.jpeg" }
             ].map((member, index) => (
               <div key={index} className="text-center">
                 <img

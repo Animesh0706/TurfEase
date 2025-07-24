@@ -16,8 +16,8 @@ export const AppProvider = ({ children }) => {
   const [turfs, setTurfs] = useState([
     {
       id: 1,
-      name: 'Green Valley Sports Complex',
-      location: 'Downtown',
+      name: 'Bayside Sports PVT LTD',
+      location: 'Bandra',
       price: 1500,
       image: 'https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg',
       rating: 4.5,
@@ -27,8 +27,8 @@ export const AppProvider = ({ children }) => {
     },
     {
       id: 2,
-      name: 'Urban Football Arena',
-      location: 'City Center',
+      name: 'Sonic Sports Construction',
+      location: 'Bandra',
       price: 2000,
       image: 'https://images.pexels.com/photos/1618200/pexels-photo-1618200.jpeg',
       rating: 4.8,
@@ -38,8 +38,8 @@ export const AppProvider = ({ children }) => {
     },
     {
       id: 3,
-      name: 'Riverside Sports Ground',
-      location: 'Riverside',
+      name: 'Goalster sports arena',
+      location: 'Bandra',
       price: 1200,
       image: 'https://images.pexels.com/photos/1884574/pexels-photo-1884574.jpeg',
       rating: 4.2,

@@ -24,7 +24,7 @@ const LoginPage = () => {
       return;
     }
 
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxWT6Z2Vhw3ol416ETLfbV73EXuyKi6Kxjd7H4p9kul8ikCJvInYC5agPuNfekV66etqw/exec"; 
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzCyCQL8A5yyOpkEAvK_aLsXRPcrRppdC2jrA_TBRyb795RcY7uLkKxJr1WVMXtaMAiZw/exec"; 
 
     if (isLogin) {
       // LOGIN → GET Request

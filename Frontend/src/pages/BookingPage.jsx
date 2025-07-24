@@ -38,35 +38,60 @@ const BookingPage = () => {
     setShowBookingForm(true);
   };
 
-  const handleBookingSubmit = (e) => {
-    e.preventDefault();
-    if (!selectedDate || !selectedTime) {
-      alert('Please select date and time');
-      return;
-    }
+const handleBookingSubmit = async (e) => {
+  e.preventDefault();
+  if (!selectedDate || !selectedTime) {
+    alert('Please select date and time');
+    return;
+  }
 
-    const booking = {
-      turfId: selectedTurf.id,
-      turfName: selectedTurf.name,
-      date: selectedDate,
-      time: selectedTime,
-      price: selectedTurf.price,
-      userDetails: bookingDetails,
-      userId: user.id || user.name
-    };
-
-    addBooking(booking);
-    alert('Booking confirmed! Check your dashboard for details.');
-    setShowBookingForm(false);
-    setSelectedTurf(null);
-    setBookingDetails({
-      name: '',
-      phone: '',
-      email: '',
-      players: '',
-      specialRequests: ''
+  try {
+    const response = await fetch('http://127.0.0.1:5000/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: bookingDetails.name,
+        phone: bookingDetails.phone,
+        turfName: selectedTurf.name,
+        bookingTime: `${selectedDate} ${selectedTime}`
+      })
     });
-  };
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('Booking confirmed! Confirmation email sent.');
+      // Optionally:
+      // addBooking locally for dashboard view
+      const booking = {
+        turfId: selectedTurf.id,
+        turfName: selectedTurf.name,
+        date: selectedDate,
+        time: selectedTime,
+        price: selectedTurf.price,
+        userDetails: bookingDetails,
+        userId: user.id || user.name
+      };
+      addBooking(booking);
+
+      // Reset form
+      setShowBookingForm(false);
+      setSelectedTurf(null);
+      setBookingDetails({
+        name: '',
+        phone: '',
+        email: '',
+        players: '',
+        specialRequests: ''
+      });
+    } else {
+      alert(data.message || 'Booking failed. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error booking turf:', error);
+    alert('Error booking turf. Please try again.');
+  }
+};
 
   const getTomorrowDate = () => {
     const tomorrow = new Date();

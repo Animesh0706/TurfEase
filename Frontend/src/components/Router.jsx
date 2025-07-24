@@ -20,8 +20,8 @@ export const Router = () => {
 
     switch (currentPage) {
       case 'home':
-        // return <HomePage />;
-        return <GeminiChat />;
+        return <HomePage />;
+        // return <GeminiChat />;
       case 'about':
         return <AboutPage />;
       case 'booking':

@@ -1,4 +1,6 @@
+// AppContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useLocalStorage } from './useLocalStorage';
 
 const AppContext = createContext();
 
@@ -12,12 +14,12 @@ export const useApp = () => {
 
 export const AppProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('home');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useLocalStorage('user', null);
   const [turfs, setTurfs] = useState([
     {
       id: 1,
-      name: 'Bayside Sports PVT LTD',
-      location: 'Bandra',
+      name: 'Green Valley Sports Complex',
+      location: 'Downtown',
       price: 1500,
       image: 'https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg',
       rating: 4.5,
@@ -27,8 +29,8 @@ export const AppProvider = ({ children }) => {
     },
     {
       id: 2,
-      name: 'Sonic Sports Construction',
-      location: 'Bandra',
+      name: 'Urban Football Arena',
+      location: 'City Center',
       price: 2000,
       image: 'https://images.pexels.com/photos/1618200/pexels-photo-1618200.jpeg',
       rating: 4.8,
@@ -38,28 +40,26 @@ export const AppProvider = ({ children }) => {
     },
     {
       id: 3,
-      name: 'Goalster sports arena',
-      location: 'Bandra',
+      name: 'Riverside Sports Ground',
+      location: 'Riverside',
       price: 1200,
       image: 'https://images.pexels.com/photos/1884574/pexels-photo-1884574.jpeg',
       rating: 4.2,
       reviews: 67,
-      amenities: ['Natural Grass', 'Parking', 'Water'],
+      amenities: ['Natural Grass', 'Parking', 'Water', 'Cafeteria'],
       availableHours: ['07:00', '08:00', '09:00', '17:00', '18:00', '19:00']
     }
   ]);
   
-  const [bookings, setBookings] = useState([]);
-  const [reviews, setReviews] = useState([]);
+  const [bookings, setBookings] = useLocalStorage('bookings', []);
+  const [reviews, setReviews] = useLocalStorage('reviews', []);
 
   const login = (userType, userData) => {
     setUser({ type: userType, ...userData });
-    localStorage.setItem('user', JSON.stringify({ type: userType, ...userData }));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user');
     setCurrentPage('home');
   };
 
@@ -70,7 +70,22 @@ export const AppProvider = ({ children }) => {
       status: 'confirmed',
       bookingDate: new Date().toISOString()
     };
-    setBookings([...bookings, newBooking]);
+    setBookings((prevBookings) => [...prevBookings, newBooking]);
+
+    
+    setTurfs((prevTurfs) =>
+      prevTurfs.map((turf) => {
+        if (turf.id === booking.turfId) {
+          
+          const updatedAvailableHours = turf.availableHours.filter(
+            (hour) => hour !== booking.time
+          );
+          return { ...turf, availableHours: updatedAvailableHours };
+        }
+        return turf;
+      })
+    );
+    // --- END NEW LOGIC ---
   };
 
   const cancelBooking = (bookingId) => {
@@ -79,6 +94,7 @@ export const AppProvider = ({ children }) => {
         ? { ...booking, status: 'cancelled' }
         : booking
     ));
+    
   };
 
   const addReview = (review) => {
@@ -111,10 +127,7 @@ export const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    
   }, []);
 
   const value = {
@@ -124,7 +137,7 @@ export const AppProvider = ({ children }) => {
     login,
     logout,
     turfs,
-    setTurfs,
+    setTurfs, // Make sure setTurfs is exposed if you need to manually update turfs elsewhere
     bookings,
     addBooking,
     cancelBooking,

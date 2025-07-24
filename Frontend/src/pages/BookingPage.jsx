@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { MapPin, Clock, Star, Users, Wifi, Car, Shirt, Coffee, Calendar, CreditCard } from 'lucide-react';
 import { useLocalStorage } from '../context/useLocalStorage';
+import TurfMap from './TurfMap';
 
 const BookingPage = () => {
   const { turfs, addBooking, user, setCurrentPage } = useApp();
@@ -38,60 +39,60 @@ const BookingPage = () => {
     setShowBookingForm(true);
   };
 
-const handleBookingSubmit = async (e) => {
-  e.preventDefault();
-  if (!selectedDate || !selectedTime) {
-    alert('Please select date and time');
-    return;
-  }
-
-  try {
-    const response = await fetch('http://127.0.0.1:5000/book', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: bookingDetails.name,
-        phone: bookingDetails.phone,
-        turfName: selectedTurf.name,
-        bookingTime: `${selectedDate} ${selectedTime}`
-      })
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert('Booking confirmed! Confirmation email sent.');
-      // Optionally:
-      // addBooking locally for dashboard view
-      const booking = {
-        turfId: selectedTurf.id,
-        turfName: selectedTurf.name,
-        date: selectedDate,
-        time: selectedTime,
-        price: selectedTurf.price,
-        userDetails: bookingDetails,
-        userId: user.id || user.name
-      };
-      addBooking(booking);
-
-      // Reset form
-      setShowBookingForm(false);
-      setSelectedTurf(null);
-      setBookingDetails({
-        name: '',
-        phone: '',
-        email: '',
-        players: '',
-        specialRequests: ''
-      });
-    } else {
-      alert(data.message || 'Booking failed. Please try again.');
+  const handleBookingSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedDate || !selectedTime) {
+      alert('Please select date and time');
+      return;
     }
-  } catch (error) {
-    console.error('Error booking turf:', error);
-    alert('Error booking turf. Please try again.');
-  }
-};
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: bookingDetails.name,
+          phone: bookingDetails.phone,
+          turfName: selectedTurf.name,
+          bookingTime: `${selectedDate} ${selectedTime}`
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Booking confirmed! Confirmation email sent.');
+        // Optionally:
+        // addBooking locally for dashboard view
+        const booking = {
+          turfId: selectedTurf.id,
+          turfName: selectedTurf.name,
+          date: selectedDate,
+          time: selectedTime,
+          price: selectedTurf.price,
+          userDetails: bookingDetails,
+          userId: user.id || user.name
+        };
+        addBooking(booking);
+
+        // Reset form
+        setShowBookingForm(false);
+        setSelectedTurf(null);
+        setBookingDetails({
+          name: '',
+          phone: '',
+          email: '',
+          players: '',
+          specialRequests: ''
+        });
+      } else {
+        alert(data.message || 'Booking failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error booking turf:', error);
+      alert('Error booking turf. Please try again.');
+    }
+  };
 
   const getTomorrowDate = () => {
     const tomorrow = new Date();
@@ -153,7 +154,7 @@ const handleBookingSubmit = async (e) => {
                   <input
                     type="text"
                     value={bookingDetails.name}
-                    onChange={(e) => setBookingDetails({...bookingDetails, name: e.target.value})}
+                    onChange={(e) => setBookingDetails({ ...bookingDetails, name: e.target.value })}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     required
                   />
@@ -165,7 +166,7 @@ const handleBookingSubmit = async (e) => {
                   <input
                     type="tel"
                     value={bookingDetails.phone}
-                    onChange={(e) => setBookingDetails({...bookingDetails, phone: e.target.value})}
+                    onChange={(e) => setBookingDetails({ ...bookingDetails, phone: e.target.value })}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     required
                   />
@@ -180,7 +181,7 @@ const handleBookingSubmit = async (e) => {
                   <input
                     type="email"
                     value={bookingDetails.email}
-                    onChange={(e) => setBookingDetails({...bookingDetails, email: e.target.value})}
+                    onChange={(e) => setBookingDetails({ ...bookingDetails, email: e.target.value })}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     required
                   />
@@ -194,7 +195,7 @@ const handleBookingSubmit = async (e) => {
                     min="2"
                     max="22"
                     value={bookingDetails.players}
-                    onChange={(e) => setBookingDetails({...bookingDetails, players: e.target.value})}
+                    onChange={(e) => setBookingDetails({ ...bookingDetails, players: e.target.value })}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     required
                   />
@@ -208,7 +209,7 @@ const handleBookingSubmit = async (e) => {
                 <textarea
                   rows="3"
                   value={bookingDetails.specialRequests}
-                  onChange={(e) => setBookingDetails({...bookingDetails, specialRequests: e.target.value})}
+                  onChange={(e) => setBookingDetails({ ...bookingDetails, specialRequests: e.target.value })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="Any special requirements or requests..."
                 />
@@ -265,7 +266,7 @@ const handleBookingSubmit = async (e) => {
   return (
     <div className="min-h-screen bg-orange-50">
       <Header />
-      
+
       {/* Header Section */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
@@ -278,16 +279,24 @@ const handleBookingSubmit = async (e) => {
         </div>
       </section>
 
+      {/* Turf Map Section */}
+      <section className="px-4 sm:px-6 lg:px-8 mb-10">
+        <div className="max-w-7xl mx-auto">
+          <TurfMap />
+        </div>
+      </section>
+
+
       {/* Turfs Grid */}
-      <section className="pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="pb-20 px-4 sm:px-6 lg:px-8 mt">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {turfs.map((turf) => (
               <div key={turf.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 {/* Turf Image */}
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={turf.image} 
+                  <img
+                    src={turf.image}
                     alt={turf.name}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />

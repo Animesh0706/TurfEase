@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Replace with your Gemini API key
-const GEMINI_API_KEY = "AIzaSyBTwTOfP8RKriz9gGb7faKJzVIJKcAvNI0";
+const GEMINI_API_KEY = "YOUR_API_KEY";
 
 const GeminiChat = () => {
     const [messages, setMessages] = useState([
